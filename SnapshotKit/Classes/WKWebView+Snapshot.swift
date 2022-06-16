@@ -50,7 +50,7 @@ extension WKWebView {
     }
 
     override
-    public func asyncTakeSnapshotOfFullContent(maxPage: Int = 10, _ completion: @escaping ((UIImage?) -> Void)) {
+    public func asyncTakeSnapshotOfFullContent(_ completion: @escaping ((UIImage?) -> Void)) {
         let originalOffset = self.scrollView.contentOffset
 
         // 当contentSize.height<bounds.height时，保证至少有1页的内容绘制
@@ -58,8 +58,8 @@ extension WKWebView {
         if self.scrollView.contentSize.height > self.scrollView.bounds.height {
             pageNum = Int(floorf(Float(self.scrollView.contentSize.height / self.scrollView.bounds.height)))
         }
-        if pageNum > maxPage {
-            pageNum = maxPage
+        if pageNum > 10 {
+            pageNum = 10
         }
 
         self.loadPageContent(0, maxIndex: pageNum, completion: {
