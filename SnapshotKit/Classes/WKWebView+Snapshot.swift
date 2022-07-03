@@ -23,7 +23,11 @@ extension WKWebView {
 
     override
     public func takeSnapshotOfFullContent() -> UIImage? {
-        let renderer = WebViewPrintPageRenderer.init(formatter: self.viewPrintFormatter(), contentSize: self.scrollView.contentSize)
+        var contentSize = self.scrollView.contentSize
+        if contentSize.height >= 1000 {
+            contentSize.height = 1000
+        }
+        let renderer = WebViewPrintPageRenderer.init(formatter: self.viewPrintFormatter(), contentSize: contentSize)
         let image = renderer.printContentToImage()
         return image
     }
